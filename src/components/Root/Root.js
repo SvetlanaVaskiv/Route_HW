@@ -12,6 +12,8 @@ export const Root = () => {
 			<img
 				src={`https://image.tmdb.org/t/p/original/wwemzKWzjKYJFfCeiB57q3r4Bcm.svg`}
 				width='620'
+				alt="Here should be the poster"
+
 			/>
 			<ButtonStyle variant='contained' onClick={onGoForward}>Watch Movie</ButtonStyle>
 		</StyleCard>

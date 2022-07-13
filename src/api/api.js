@@ -30,3 +30,33 @@ export const fetchMovieDetails = movieId => {
 			throw err;
 		})
 }
+export const fetchMovie = movieId => {
+
+	return fetch(
+		`https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=${apiKey}`
+	)
+		.then(res => {
+			if (res.ok) {
+				return res.json()
+			}
+			throw new Error('not found');
+		})
+		.then(data =>(data))
+		.catch(err => {
+			throw err;
+		})
+}
+export const fetchPosters=(id)=>{
+	console.log('Fetching posters...', id);
+	return fetch(`https://api.themoviedb.org/3/movie/${id}/images?api_key=${apiKey}`)
+	.then(res => {
+		if (res.ok) {
+			return res.json()
+		}
+		throw new Error('not found');
+	})
+	.then(data =>(data))
+	.catch(err => {
+		throw err;
+	})
+}

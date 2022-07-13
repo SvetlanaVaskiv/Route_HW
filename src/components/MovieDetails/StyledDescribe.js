@@ -16,3 +16,7 @@ export const StyledDescribe = styled.div`
     align-items: center;
     justify-content: space-around;
 `
+export const Poster=styled.div`
+display: flex;
+justify-content: space-between;
+`

@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react"
 import { StyledComment } from "./StyledComment";
 
 export const CommentsItem = ({ name, date, id }) => {

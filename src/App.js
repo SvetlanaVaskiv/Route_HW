@@ -6,12 +6,16 @@ import { Movies } from './pages/MoviesPage';
 import { RootPage } from './pages/RootPage';
 
 function App() {
+
+
 	return (
 		<Router>
 			<Switch>
+				
 				<Route exact path='/' component={RootPage} />
 				<Route exact path='/movies' component={Movies} />
 				<Route exact path='/movie/:id' component={MovieDetails} />
+
 				<Route component={NotFound} />
 			</Switch>
 		</Router>

@@ -1,3 +1,5 @@
+import Preload from "../components/Preload/Preload"
+
 export const NotFound = () => {
-	return <h1>NotFound</h1>
+	return <Preload/>
 }

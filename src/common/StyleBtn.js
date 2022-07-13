@@ -1,7 +1,5 @@
 import { Button } from "@mui/material";
 import { styled } from '@mui/material/styles';
-import Stack from '@mui/material/Stack';
-import { purple } from '@mui/material/colors';
 
 
 export const ButtonStyle = styled(Button)({
