@@ -1,18 +1,16 @@
 import { useEffect, useState } from "react";
 import { fetchMovie, fetchMovieDetails } from "../../api/api";
 import { ButtonStyle } from "../../common/StyleBtn";
-import { StyleCard } from "../Root/StyleRootPage";
 import { CommentsList } from "../CommentsList/CommentsList";
 import { useHistory, useRouteMatch } from "react-router-dom";
 import { Poster, StyledDescribe } from "./StyledDescribe";
-import { StyleList } from "../MovieItem/StyleList";
+import { StyleList } from "../MovieItem/styles";
 import Slider from "react-slick";
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { LinearProgress } from "@mui/material";
-import Canvas from "../Preload/Canvas";
-import Preload from "../Preload/Preload";
+
 
 export const MovieDetailsContainer = () => {
   const [move, setMove] = useState(null);

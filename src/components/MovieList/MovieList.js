@@ -3,14 +3,12 @@ import PropTypes from "prop-types";
 import { fetchPosters, getTrending } from "../../api/api";
 import { MovieItem } from "../MovieItem/MovieItem";
 import * as React from "react";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import { OverlayPost, OverlayPosted, Post } from "./styles";
+import { Post } from "./styles";
 import { Header } from "../Header/Header";
+import Slider from "react-slick";
+import {settings} from '../../common/settings'
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 export const MovieList = () => {
   const [response, setResponse] = useState([]);
@@ -39,21 +37,22 @@ export const MovieList = () => {
         })
         .then((data) =>
           setPath(
-            data.posters.map((file) => file.file_path)[
-              Math.floor(Math.random() * data.posters.length)
+            data.backdrops.map((file) => file.file_path)[
+              Math.floor(Math.random() * data.backdrops.length)
             ]
           )
         );
   }, [id]);
+const secondPath=response.map(item=>item.backdrop_path)[Math.floor(Math.random() * response.length)]
+const secondPost= `https://image.tmdb.org/t/p/w300${secondPath}`
+console.log(secondPost);
 
-  console.log(posters);
   return (
     <>
-	<Header/>
-	<Post path={path} >
-	</Post>
-    
-      <ul style={{ display: "flex", flexWrap: "wrap" }}>
+      <Header />
+      {id && path && <Post path={path}></Post>}
+      <h1>What's popular</h1>
+      <Slider {...settings} >
         {response &&
           response.map(
             ({ title, id, vote_average, poster_path, release_date }) => (
@@ -67,7 +66,8 @@ export const MovieList = () => {
               />
             )
           )}
-      </ul>
+      </Slider>
+      {id && path && <Post secPath={secondPost}></Post>}
     </>
   );
 };
