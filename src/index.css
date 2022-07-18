@@ -12,6 +12,9 @@ ul{
   padding: 10px;
   display: flex;
   flex-direction: column;
+margin-block-end: 0;
+margin-block-start: 0;
+padding-inline-start: 0;
 }
 
 a{
@@ -30,7 +33,9 @@ h1{
 p{
   margin: 0;
   font-weight: 600;
+  align-self: center;
 }
+
 @media(min-width:532px) {
   ul{
     flex-direction: row;

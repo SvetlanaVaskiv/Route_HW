@@ -5,6 +5,29 @@ export const settings = {
     slidesToShow: 7,
     slidesToScroll: 7,
     draggable: true,
+    arrows:false,
+    appendDots: dots => (
+        <div
+          style={{
+            backgroundColor: "#ddd",
+            borderRadius: "10px",
+            padding: "10px"
+          }}
+        >
+          <ul style={{ margin: "0px" }}> {dots} </ul>
+        </div>
+      ),
+      customPaging: i => (
+        <div
+          style={{
+            width: "30px",
+            color: "blue",
+            border: "1px blue solid"
+          }}
+        >
+          {i + 1}
+        </div>
+      ),
     responsive: [
       {
         breakpoint: 320,
@@ -60,8 +83,6 @@ export const settings = {
         settings: {
           slidesToShow: 5,
           slidesToScroll: 5,
-          infinite: true,
-          dots: true,
         },
       },
       {
@@ -69,8 +90,6 @@ export const settings = {
         settings: {
           slidesToShow: 6,
           slidesToScroll: 6,
-          infinite: true,
-          dots: true,
         },
       },
     ],

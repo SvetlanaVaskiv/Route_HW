@@ -1,8 +1,24 @@
 const apiKey = '1793f1d1bd070eb7923f4cdaee264029';
 
+
+
 export const getTrending = () => {
 	return fetch(
 		`https://api.themoviedb.org/3/trending/movie/week?api_key=${apiKey}`)
+		.then(res => {
+			if (res.ok) {
+				return res.json()
+			}
+			throw new Error('not found');
+		})
+		.then(data => data.results)
+		.catch(err => {
+			throw err;
+		});
+}
+export const getTrendingByDay = () => {
+	return fetch(
+		`https://api.themoviedb.org/3/trending/movie/day?api_key=${apiKey}`)
 		.then(res => {
 			if (res.ok) {
 				return res.json()
@@ -47,7 +63,6 @@ export const fetchMovie = movieId => {
 		})
 }
 export const fetchPosters=(id)=>{
-	console.log('Fetching posters...', id);
 	return fetch(`https://api.themoviedb.org/3/movie/${id}/images?api_key=${apiKey}`)
 	.then(res => {
 		if (res.ok) {

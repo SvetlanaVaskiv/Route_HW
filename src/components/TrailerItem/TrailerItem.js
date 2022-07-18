@@ -1,8 +1,8 @@
-import { LayoutNames, LayoutProgressive, PostLi, StyleList } from "./styles";
 import { useHistory } from "react-router-dom";
 import { Progressive } from "../../common/Progressive";
+import { Names, SecondStyleList } from "./styles";
 
-export const MovieItem = ({
+export const TrailerItem = ({
   title,
   id,
   vote_average,
@@ -24,20 +24,18 @@ export const MovieItem = ({
       pathname: `/movie/${id}`,
     });
   };
-
+const fontsizes={
+    mobile: '8px',
+    laptop: '12px',
+}
   return (
 	
-    <StyleList onClick={onPushPass}>
-		<PostLi 
+    <SecondStyleList onClick={onPushPass}>
+		<img 
 		src={`https://image.tmdb.org/t/p/w300${poster_path}`}
-		/>
-	  <LayoutProgressive>
-        <Progressive vote_average={vote_average}  />
-      </LayoutProgressive>
+		/>		
+		<Names fonts={fontsizes}>{title}</Names>
 		
-		<h1>{title}</h1>
-		<p>{date}</p>
-		
-    </StyleList>
+    </SecondStyleList>
   );
 };

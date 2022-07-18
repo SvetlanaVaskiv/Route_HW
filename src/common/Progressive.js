@@ -1,22 +1,15 @@
-import CircularProgress from '@mui/material/CircularProgress';
-import { Typography } from '@mui/material';
+
 import { Box } from '@mui/system';
+import { SHIFT, SIZES ,FONTSIZES} from './consts';
+import { StyledCircularProgress, StyledRating, BoxLayout } from './styles';
 
 export const Progressive = ({ vote_average }) => {
 	const vote =Math.round( vote_average*10);
 
+
 	return (
-		<Box sx={{
-			position: 'relative',
-			display: 'inline-flex',
-			top: '56px',
-			right: '50px',
-			backgroundColor:'black',
-			borderRadius:'50%',
-			fontWeight:'700',
-			
-		}}>
-			<CircularProgress variant="determinate" value={vote} size="4rem" color="warning"/>
+		<BoxLayout right={SHIFT} >
+			<StyledCircularProgress variant="determinate" value={vote} size={SIZES} color="warning"/>
 			<Box
 				sx={{
 					left: 0,
@@ -30,11 +23,11 @@ export const Progressive = ({ vote_average }) => {
 					
 				}}
 			>
-				<Typography variant="caption" component="div" color="success.main"
-				sx={{fontSize:'1.2em', fontWeight:'700'}} 
+				<StyledRating  color="success.main"
+			fontsizes={FONTSIZES}
 				>
 					{`${vote}`}<sup>%</sup>
-				</Typography>
+				</StyledRating>
 			</Box>
-		</Box>)
+		</BoxLayout>)
 }

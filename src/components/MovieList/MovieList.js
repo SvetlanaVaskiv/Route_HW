@@ -1,17 +1,26 @@
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { fetchPosters, getTrending } from "../../api/api";
+import { fetchPosters, getTrending, getTrendingByDay } from "../../api/api";
 import { MovieItem } from "../MovieItem/MovieItem";
 import * as React from "react";
-import { Post } from "./styles";
+import {
+  LayoutTrilers,
+  OverlayPosted,
+  Post,
+  ListTriller,
+  SecondPost,
+} from "./styles";
 import { Header } from "../Header/Header";
 import Slider from "react-slick";
-import {settings} from '../../common/settings'
+import { settings } from "../../common/settings";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { SCROLL, HIDDEN } from "../../common/consts";
+import { TrailerItem } from "../TrailerItem/TrailerItem";
 
 export const MovieList = () => {
   const [response, setResponse] = useState([]);
+  const [resTrailer, setResTrailer] = useState([]);
   const [posters, setPosters] = useState([]);
   const [id, setId] = useState(null);
   const [path, setPath] = useState(null);
@@ -26,8 +35,8 @@ export const MovieList = () => {
           data.map((item) => item.id)[Math.floor(Math.random() * data.length)]
         )
       );
+    getTrendingByDay().then((data) => setResTrailer(data));
   }, []);
-
   useEffect(() => {
     if (id)
       fetchPosters(id)
@@ -43,16 +52,29 @@ export const MovieList = () => {
           )
         );
   }, [id]);
-const secondPath=response.map(item=>item.backdrop_path)[Math.floor(Math.random() * response.length)]
-const secondPost= `https://image.tmdb.org/t/p/w300${secondPath}`
-console.log(secondPost);
+  const secondPath = response.map((item) => item.backdrop_path)[
+    Math.floor(Math.random() * response.length)
+  ];
+  const secondPost = `https://image.tmdb.org/t/p/w300${secondPath}`;
+  const padding = {
+    laptop:"3em",
+    mobile:'0.5em'
+  };
+  const heights = {
+    laptop: "500px",
+  };
+  console.log(heights.laptop);
 
   return (
     <>
       <Header />
-      {id && path && <Post path={path}></Post>}
+      {id && path && (
+        <Post path={path} height={heights}>
+          <OverlayPosted />
+        </Post>
+      )}
       <h1>What's popular</h1>
-      <Slider {...settings} >
+      <Slider {...settings}>
         {response &&
           response.map(
             ({ title, id, vote_average, poster_path, release_date }) => (
@@ -67,7 +89,24 @@ console.log(secondPost);
             )
           )}
       </Slider>
-      {id && path && <Post secPath={secondPost}></Post>}
+      {id && path && (
+        <SecondPost secpath={secondPost} padding={padding} height={heights} overflow={SCROLL}>
+          <Slider {...settings}>
+            {resTrailer &&
+              resTrailer.map(({ title, id, poster_path, release_date }) => (
+                <TrailerItem
+                  id={id}
+                  release_date={release_date}
+                  title={title}
+                  key={id}
+                  poster_path={poster_path}
+                />
+              ))}
+          </Slider>
+        </SecondPost>
+      )}
+
+      <h1>Hellllll</h1>
     </>
   );
 };
