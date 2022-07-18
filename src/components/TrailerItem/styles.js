@@ -14,6 +14,8 @@ export const Names= styled('h1',{
 })((props)=>({
 fontSize: props.fonts.mobile,
 '@media (min-width: 768px)': {fontSize: props.fonts.laptop}
-
-
 }))
+export const TrailersPost=styled.img`
+border-radius: 12px 12px 0 0;
+
+`

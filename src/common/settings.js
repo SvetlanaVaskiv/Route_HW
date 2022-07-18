@@ -9,20 +9,25 @@ export const settings = {
     appendDots: dots => (
         <div
           style={{
-            backgroundColor: "#ddd",
-            borderRadius: "10px",
-            padding: "10px"
+           display: 'flex',
+           flexDirection:'raw',
+           justifyContent: 'space-around',
+           flexWrap: 'wrap',
           }}
         >
-          <ul style={{ margin: "0px" }}> {dots} </ul>
+          <ul style={{ margin: "0px" ,flexDirection: 'row'}}> {dots} </ul>
         </div>
       ),
       customPaging: i => (
         <div
           style={{
-            width: "30px",
+            width: "20px",
             color: "blue",
-            border: "1px blue solid"
+            border: "1px blue solid",
+            borderRadius: "50%",
+            margin: '0 2px',
+                       backgroundColor:'#FFFFFF',
+
           }}
         >
           {i + 1}

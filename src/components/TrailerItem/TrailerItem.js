@@ -1,6 +1,6 @@
 import { useHistory } from "react-router-dom";
 import { Progressive } from "../../common/Progressive";
-import { Names, SecondStyleList } from "./styles";
+import { Names, SecondStyleList, TrailersPost } from "./styles";
 
 export const TrailerItem = ({
   title,
@@ -31,7 +31,7 @@ const fontsizes={
   return (
 	
     <SecondStyleList onClick={onPushPass}>
-		<img 
+		<TrailersPost 
 		src={`https://image.tmdb.org/t/p/w300${poster_path}`}
 		/>		
 		<Names fonts={fontsizes}>{title}</Names>
