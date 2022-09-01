@@ -1,5 +1,5 @@
 import "./App.css";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { HashRouter as Router, Route, Switch } from "react-router-dom";
 import { NotFound } from "./pages/NotFound";
 import { MovieDetails } from "./pages/MovieDetails";
 import { Movies } from "./pages/MoviesPage";
@@ -54,12 +54,7 @@ function App() {
   return (
     <Router>
       <Switch>
-        <Route
-          exact
-          path={"/"}
-          render={() => <RootPage />}
-          component={RootPage}
-        />
+        <Route exact path="/" component={RootPage} />
         <Route exact path="/movies" component={Movies} />
         <Route exact path="/movie/:id" component={MovieDetails} />
 
