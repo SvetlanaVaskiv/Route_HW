@@ -54,7 +54,12 @@ function App() {
   return (
     <Router>
       <Switch>
-        <Route exact path="/" component={RootPage} />
+        <Route
+          exact
+          path={"/"}
+          render={() => <RootPage />}
+          component={RootPage}
+        />
         <Route exact path="/movies" component={Movies} />
         <Route exact path="/movie/:id" component={MovieDetails} />
 
