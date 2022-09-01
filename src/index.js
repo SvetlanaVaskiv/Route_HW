@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import "normalize.css";
 import "./index.css";
 import App from "./App";
-import { BrowserRouter as Router } from "react-router-dom";
+import { HashRouter as Router } from "react-router-dom";
 import { MovieStore } from "./store/MovieStore";
 import PostersDetailsStore from "./store/PostersDetailsStore";
 import { TrailersStore } from "./store/TrailersStore";
