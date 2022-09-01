@@ -52,15 +52,13 @@ function App() {
     return <LinearProgress color="success" />;
   }
   return (
-    <Router>
-      <Switch>
-        <Route exact path="/" component={RootPage} />
-        <Route exact path="/movies" component={Movies} />
-        <Route exact path="/movie/:id" component={MovieDetails} />
+    <Switch>
+      <Route exact path="/" component={RootPage} />
+      <Route exact path="/movies" component={Movies} />
+      <Route exact path="/movie/:id" component={MovieDetails} />
 
-        <Route component={NotFound} />
-      </Switch>
-    </Router>
+      <Route component={NotFound} />
+    </Switch>
   );
 }
 
