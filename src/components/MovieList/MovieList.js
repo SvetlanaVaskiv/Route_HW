@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
-import PropTypes from "prop-types";
-import { fetchPosters, getTrending, getTrendingByDay } from "../../api/api";
+import { fetchPosters, getNowPlayingMovies } from "../../api/api";
 import { MovieItem } from "../MovieItem/MovieItem";
 import * as React from "react";
 import {
-  LayoutTrilers,
   OverlayPosted,
   Post,
-  ListTriller,
+  Search,
+  SearchLayout,
   SecondPost,
 } from "./styles";
 import { Header } from "../Header/Header";
@@ -15,68 +14,106 @@ import Slider from "react-slick";
 import { settings } from "../../common/settings";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { SCROLL, HIDDEN } from "../../common/consts";
+import { COLOR, HEIGHT, PADDING, SCROLL } from "../../common/consts";
 import { TrailerItem } from "../TrailerItem/TrailerItem";
+import { Tabs } from "../../common/Tabs";
+import { useContext } from "react";
+import { Context } from "../..";
 
 export const MovieList = () => {
-  const [response, setResponse] = useState([]);
-  const [resTrailer, setResTrailer] = useState([]);
-  const [posters, setPosters] = useState([]);
-  const [id, setId] = useState(null);
   const [path, setPath] = useState(null);
+  const tabs = ["Streaming", "On TV", "For Rent", "In Theatres"];
+  const [selectedTab, setSelectedTab] = useState("");
+  const [selectedBlock, setSelectedBlock] = useState(null);
+  const { movies } = useContext(Context);
+  const { details } = useContext(Context);
+  const { trailers } = useContext(Context);
+  console.log(trailers);
+  const secondPost = `https://image.tmdb.org/t/p/w300${details._backdrop_post}`;
   useEffect(() => {
-    getTrending()
+    fetchPosters(details._idForPost)
       .then(function (data) {
-        setResponse(data);
-        return data;
-      })
-      .then((data) =>
-        setId(
-          data.map((item) => item.id)[Math.floor(Math.random() * data.length)]
-        )
-      );
-    getTrendingByDay().then((data) => setResTrailer(data));
-  }, []);
-  useEffect(() => {
-    if (id)
-      fetchPosters(id)
-        .then(function (data) {
-          setPosters(data);
-          return data;
-        })
-        .then((data) =>
+        if (data)
           setPath(
             data.backdrops.map((file) => file.file_path)[
               Math.floor(Math.random() * data.backdrops.length)
             ]
-          )
-        );
-  }, [id]);
-  const secondPath = response.map((item) => item.backdrop_path)[
-    Math.floor(Math.random() * response.length)
-  ];
-  const secondPost = `https://image.tmdb.org/t/p/w300${secondPath}`;
-  const padding = {
-    laptop:"3em",
-    mobile:'0.5em'
-  };
-  const heights = {
-    laptop: "500px",
-  };
-  console.log(heights.laptop);
+          );
+      })
+      .catch((err) => {
+        throw new Error("I can't download a picture: " + err.message);
+      });
+  }, [details._idForPost]);
+
+  useEffect(() => {
+    if (selectedTab === "Streaming" && selectedBlock === 1) {
+      let search = "streaming";
+      getNowPlayingMovies(search).then((data) =>
+        movies.setMovieList(data.results)
+      );
+    } else if (selectedTab === "In Theatres" && selectedBlock === 1) {
+      let search = "in theatres";
+      getNowPlayingMovies(search).then((data) =>
+        movies.setMovieList(data.results)
+      );
+    } else if (selectedTab === "On TV" && selectedBlock === 1) {
+      let search = "on TV";
+      getNowPlayingMovies(search).then((data) =>
+        movies.setMovieList(data.results)
+      );
+    } else if (selectedTab === "For Rent" && selectedBlock === 1) {
+      let search = "for rent";
+      getNowPlayingMovies(search).then((data) =>
+        movies.setMovieList(data.results)
+      );
+    } else if (selectedTab === "Streaming" && selectedBlock === 2) {
+      let search = "streaming";
+      getNowPlayingMovies(search).then((data) =>
+        trailers.setTrailersList(data.results)
+      );
+    } else if (selectedTab === "In Theatres" && selectedBlock === 2) {
+      let search = "in theatres";
+      getNowPlayingMovies(search).then((data) => {
+        console.log(data.results);
+        trailers.setTrailersList(data.results);
+      });
+    } else if (selectedTab === "On TV" && selectedBlock === 2) {
+      let search = "on TV";
+      getNowPlayingMovies(search).then((data) =>
+        trailers.setTrailersList(data.results)
+      );
+    } else if (selectedTab === "For Rent" && selectedBlock === 2) {
+      let search = "for rent";
+      getNowPlayingMovies(search).then((data) =>
+        trailers.setTrailersList(data.results)
+      );
+    }
+  }, [selectedTab, selectedBlock, movies, trailers]);
 
   return (
     <>
       <Header />
-      {id && path && (
-        <Post path={path} height={heights}>
+      {path && (
+        <Post path={path} height={HEIGHT}>
           <OverlayPosted />
         </Post>
       )}
-      <h1>What's popular</h1>
+      <SearchLayout color={COLOR.black}>
+        <h1>What's popular</h1>
+        <Search>
+          <Tabs
+            selectedBlock={selectedBlock}
+            tabs={tabs}
+            onTabClick={(index) => {
+              setSelectedTab(index);
+              setSelectedBlock(1);
+            }}
+          />
+        </Search>
+      </SearchLayout>
       <Slider {...settings}>
-        {response &&
-          response.map(
+        {movies &&
+          movies._movieList.map(
             ({ title, id, vote_average, poster_path, release_date }) => (
               <MovieItem
                 id={id}
@@ -89,36 +126,45 @@ export const MovieList = () => {
             )
           )}
       </Slider>
-      {id && path && (
-        <SecondPost secpath={secondPost} padding={padding} height={heights} overflow={SCROLL}>
-          <Slider {...settings}>
-            {resTrailer &&
-              resTrailer.map(({ title, id, poster_path, release_date }) => (
-                <TrailerItem
-                  id={id}
-                  release_date={release_date}
-                  title={title}
-                  key={id}
-                  poster_path={poster_path}
+      {path && (
+        <SecondPost
+          secpath={secondPost}
+          padding={PADDING}
+          height={HEIGHT}
+          overflow={SCROLL}
+        >
+          <OverlayPosted>
+            <SearchLayout color={COLOR.white}>
+              <h1>Latest Trailers</h1>
+              <Search>
+                <Tabs
+                  tabs={tabs}
+                  onTabClick={(index) => {
+                    setSelectedTab(index);
+                    setSelectedBlock(2);
+                  }}
                 />
-              ))}
-          </Slider>
+              </Search>
+            </SearchLayout>
+
+            <Slider {...settings}>
+              {trailers._trailersList.map(
+                ({ title, id, poster_path, release_date }) => (
+                  <TrailerItem
+                    id={id}
+                    release_date={release_date}
+                    title={title}
+                    key={id}
+                    poster_path={poster_path}
+                  />
+                )
+              )}
+            </Slider>
+          </OverlayPosted>
         </SecondPost>
       )}
 
       <h1>Hellllll</h1>
     </>
   );
-};
-MovieList.propTypes = {
-  response: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      title: PropTypes.bool.isRequired,
-      poster_path: PropTypes.string.isRequired,
-      release_date: PropTypes.string.isRequired,
-      id: PropTypes.number.isRequired,
-      vote_average: PropTypes.number.isRequired,
-    })
-  ),
 };

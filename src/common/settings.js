@@ -6,6 +6,10 @@ export const settings = {
     slidesToScroll: 7,
     draggable: true,
     arrows:false,
+    lazyLoad: true,
+   /*autoplay: true,
+   autoplaySpeed: 8000,*/
+
     appendDots: dots => (
         <div
           style={{

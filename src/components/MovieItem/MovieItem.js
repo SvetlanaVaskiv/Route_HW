@@ -1,4 +1,4 @@
-import { LayoutNames, LayoutProgressive, PostLi, StyleList } from "./styles";
+import {  LayoutProgressive, PostLi, StyleList } from "./styles";
 import { useHistory } from "react-router-dom";
 import { Progressive } from "../../common/Progressive";
 
@@ -31,6 +31,10 @@ export const MovieItem = ({
 		<PostLi 
 		src={`https://image.tmdb.org/t/p/w300${poster_path}`}
 		/>
+		<div>
+
+
+		</div>
 	  <LayoutProgressive>
         <Progressive vote_average={vote_average}  />
       </LayoutProgressive>

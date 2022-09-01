@@ -1,5 +1,4 @@
 import React, { useRef, useEffect } from "react";
-import { useCallback } from "react";
 
 const Canvas = (props) => {
   const canvasRef = useRef(null);

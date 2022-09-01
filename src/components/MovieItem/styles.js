@@ -1,4 +1,3 @@
-import { CardMedia } from "@mui/material";
 import styled from "styled-components";
 
 export const StyleList = styled.li`
@@ -13,9 +12,13 @@ export const StyleList = styled.li`
   margin: 0 0.5rem;
   border-radius: 12px;
   background-color: #fff;
+  @media (min-width: 375px) and (max-width:506px){
+    width: 120px;
+  }
   @media (min-width: 768px) {
     width: 200px;
   }
+  
 `;
 export const PostLi = styled.img`
   object-fit: cover;

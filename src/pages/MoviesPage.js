@@ -1,5 +1,5 @@
-import { MovieList } from "../components/MovieList/MovieList"
+import { MovieList } from "../components/MovieList/MovieList";
 
 export const Movies = ({ history }) => {
-	return <MovieList history={history} />
-}
+  return <MovieList history={history} />;
+};
